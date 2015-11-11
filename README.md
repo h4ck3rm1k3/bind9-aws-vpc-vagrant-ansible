@@ -1,4 +1,4 @@
-# test-repo
+# bind9-aws-vpc-vagrant-ansible
 Vagrant and ansible files to build a bind9 instance in an AWS VPC
 
 ## repreqs
