@@ -1,7 +1,18 @@
 # test-repo
 testing
 
-vagrant/Vagrantfile
+## file structure
+./README.md
+vagrant/
+* Vagrantfile
+ansible/
+* roles/
+** hostname-set/
+** reboot/
+** util-dns-bind-config/
+** util-dns-bind/
+* ansible_hosts
+# aws-dns.yml
 
 #
 external = File.read '<path to local system file containing AWS access keys>':
