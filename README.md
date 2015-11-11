@@ -1,6 +1,11 @@
 # test-repo
 Vagrant and ansible files to build a bind9 instance in an AWS VPC
 
+## repreqs
+* install vagrant http://www.vagrantup.com/downloads 
+* install vagrant-aws plugin via vagrant plugin install vagrant-aws
+* install ansible (doesn't work with Windows), see http://docs.ansible.com/ansible/intro_installation.html
+
 ## env spec file updates
 
 * make a file with your aws access keys with the following two lines
