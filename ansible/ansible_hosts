@@ -1,0 +1,3 @@
+[aws-dns] 
+<local ip of dns instance> hostname=<hostname of dns instance>
+

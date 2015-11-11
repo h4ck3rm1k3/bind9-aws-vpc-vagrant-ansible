@@ -1,0 +1,25 @@
+---
+- name: util-dns-bind-config | Generate /etc/bind/named.conf.local on the server
+  template: src=named.conf.local
+            dest=/etc/bind/named.conf.local
+            owner=root
+            group=bind
+            mode=644
+
+- name: util-dns-bind-config | Generate /etc/bind/db.site on the server
+  template: src=db.site
+            dest=/etc/bind/db.site
+            owner=root
+            group=bind
+            mode=644
+
+- name: util-dns-bind-config | Generate /etc/bind/named.conf.options on the server
+  template: src=named.conf.options
+            dest=/etc/bind/named.conf.options
+            owner=root
+            group=bind
+            mode=644
+
+- name: restart bind9
+  command: service bind9 restart
+

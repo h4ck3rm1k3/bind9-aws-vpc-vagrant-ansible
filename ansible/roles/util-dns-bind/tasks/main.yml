@@ -1,0 +1,7 @@
+---
+- name: util-dns-bind | Install bind9
+  apt: pkg=bind9
+
+- name: util-dns-bind | Install dns utils
+  apt: pkg=dnsutils
+

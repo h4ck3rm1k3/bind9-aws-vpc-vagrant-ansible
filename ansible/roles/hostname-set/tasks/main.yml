@@ -1,0 +1,9 @@
+---
+
+- name: Generate the /etc/hostname file on the server
+  template: src=hostname
+            dest=/etc/hostname
+            owner=root
+            group=root
+            mode=644
+

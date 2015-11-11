@@ -1,0 +1,11 @@
+---
+- hosts: aws-dns
+
+  user: ubuntu
+  sudo: true
+
+  roles:
+    - util-dns-bind
+    - util-dns-bind-config
+    - hostname-set
+    - reboot

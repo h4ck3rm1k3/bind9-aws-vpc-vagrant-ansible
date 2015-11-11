@@ -1,0 +1,4 @@
+zone "testsite" {
+	type master;
+        file "/etc/bind/db.testsite";
+};
