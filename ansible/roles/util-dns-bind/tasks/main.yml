@@ -1,4 +1,12 @@
 ---
+
+- name: apt-get update (Debian)
+  command: "apt-get update" 
+  ignore_errors: yes
+  when: ansible_os_family == "Debian"
+  tags:
+    - apt_update
+
 - name: util-dns-bind | Install bind9
   apt: pkg=bind9
 

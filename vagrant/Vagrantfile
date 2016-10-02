@@ -1,67 +1,25 @@
-
 VAGRANTFILE_API_VERSION = "2"
 BOX_TIMEOUT = 180
 
-external = File.read '<...>'
-eval external
-
-boxes = [
-
-  #set 1
-  { :instance_name => 'dns-a-1', :ssh_user => 'ubuntu', :instance_ip => '10.10.10.2', :public_ip => 'false', :ami => 'ami-XXXXXXXX', :subnet => 'subnet-XXXXXXXX', :sg => 'sg-XXXXXXX', :instance_type => 't2.micro' },
-
-  #set 2
-
-]
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  boxes.each do |box|
-    config.vm.define box[:instance_name], primary: box[:primary] do |config|
+  config.vm.box = "ARTACK/debian-jessie"
+  config.vm.boot_timeout = BOX_TIMEOUT
+  config.vm.box_url = "https://atlas.hashicorp.com/ARTACK/boxes/debian-jessie"
+  config.vm.network :public_network
+  
+  # disable USB 2.0
+  config.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--usb", "off"]
+      vb.customize ["modifyvm", :id, "--usbehci", "off"]
+  end
+  
+   config.vm.provision :ansible do |ansible|
+     ansible.playbook = "../ansible/aws-dns.yml"
+     ansible.inventory_path = "../ansible/ansible_hosts"
+     ansible.limit = 'all'
+     ansible.verbose = "-vvvv"
+   end #end config.vm.provision
 
-     config.vm.box = box[:instance_name]
-      config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
-      config.vm.hostname = box[:instance_name]
-      config.vm.boot_timeout = BOX_TIMEOUT
-      config.vm.synced_folder ".", "/vagrant", disabled: true #added due to tty errors with amazon linux during provisioning
-
-      config.vm.provider :aws do |aws, override|
-
-        aws.access_key_id = $aws_key_id
-        aws.secret_access_key = $aws_secret
-
-        aws.keypair_name = "<...>"
-
-        aws.ami = box[:ami]
-
-        override.ssh.username = box[:ssh_user]
-        override.ssh.private_key_path = "<...>"
-
-        aws.instance_type = box[:instance_type]
-
-        aws.availability_zone = "us-east-1d"
-
-        aws.private_ip_address = box[:instance_ip]
-        aws.associate_public_ip = box[:public_ip]
-
-        aws.subnet_id = box[:subnet]
-        aws.security_groups = box[:sg]
-
-        aws.tags = {
-            'Name' => box[:instance_name],
-        }
-
-     end #end config.vm.provider
-
-     config.vm.provision :ansible do |ansible|
-       ansible.playbook = "../ansible_scripts/aws-dns.yml"
-       ansible.inventory_path = "../ansible_scripts/ansible_hosts"
-       ansible.limit = 'all'
-       ansible.verbose = "-vvvv"
-     end #end config.vm.provision
-
-    end #end config.vm.define
-
-  end #end boxes.each
 
 end #end Vagrant
