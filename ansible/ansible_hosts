@@ -1,2 +1,2 @@
 [aws-dns] 
-10.0.2.15 hostname=test ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200 
+10.0.2.15  ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200 host=test
